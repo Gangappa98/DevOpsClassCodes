@@ -1,0 +1,724 @@
+Docker Overview
+Difference Between Docker & Hypervisor
+Docker Architecture
+=============================================================================================
+Docker Installation
+Docker Configuration files
+Docker basic commands
+  * docker version
+  * docker info
+  * docker images
+  * docker pull
+  * docker run
+  * docker exec 
+  * docker ps
+  * docker ps -a
+  * docker rm 
+  * docker rmi
+  * docker start/stop/restart
+  * docker log
+  * docker inspect
+==============================================================================================
+Dockerhub Account Creation
+==============================================================================================
+Docker Advanced commands
+ * docker build
+ * docker login
+ * docker logout
+ * docker push
+ * docker pull
+============================================================================================
+Docker tagging of Images
+============================================================================================
+Dockerfile Instructions & Creation
+How to build image and run container ?
+============================================================================================
+Docker save & load
+Docker export & import
+Docker volumes
+E2E httpd build & deployment via Docker
+E2E Tomcat build &  deployment via Docker
+============================================================================================================
+Docker Overview :
+============================================================================================================
+Docker is lightweight container operating system or container management tool.
+Docker uses operating system dependencies from base operating that is why Docker is lightweight.
+With Docker we can run any kind of OS application , that means docker is portable.
+=======================================================
+Why Docker ?
+=======================================================
+To overcome issues of Virutal machines , we require containization to reduce the cost.
+To increase the performance of the application.
+
+=======================================================
+Difference Between Docker & Hypervisor
+=======================================================
+Hypervisor : VMware workstation
+             Oracle Virtual box
+
+=======================================================
+Docker Architecture: 
+======================================================
+Docker is 2 Teir Architecture.
+Docker works on Client-Server Architecture
+
+
+1. Docker Client: Docker client is required to interacte with docker daemon for processing any kind of docker operations.
+      * docker build -> building docker images
+      * docker pull -> Docker pull pulls/fetches images from dockerhub.com registry
+      * docker run -> creates containers for running applications.
+
+2. Docker Host:  Docker host contains 3 things:
+     * docker dameon : Docker dameon is process which will execute all docker operations.
+     * docker container : Docker container is lightweight OS where we deploy the images for launching the applications. Basically it acts as completed OS.
+     * docker Images: Docker images contains OS files, softwares and application.
+
+3. Registry: dockerhub.com -> Here all the public and private images are stored.
+                         -> We can store all our customized images.
+                     Registry : docker.io
+
+=============================================================================================================================
+Docker Installation:
+============================================================================================================================
+========================================================================
+Installation of Docker :
+=============================================================================
+1. Pre-requisite : Install JAVA
+sudo su
+yum install java-1.8.0* -y
+
+2. Upgrade the repository
+
+yum update -y
+
+3. Configure the repository - https://download.docker.com/linux/rhel/
+
+vi /etc/yum.repos.d/docker-ce.repo
+
+[docker-ce-stable]
+name=Docker CE Stable - $basearch
+baseurl=https://download.docker.com/linux/centos/$releasever/$basearch/stable
+enabled=1
+gpgcheck=1
+gpgkey=https://download.docker.com/linux/centos/gpg
+
+3.Install Docker Package
+
+yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y 
+
+
+4. Enable/start/status docker service
+
+systemctl enable docker
+systemctl start docker
+systemctl status docker
+
+5. Verify Docker is running :
+docker version
+docker info
+docker ps  -> all running containers
+==============================================================================================
+Docker Configuration files:
+==============================================================================================
+1. /etc/containerd/config.toml  - Configuration of docker
+
+2. /bin/docker - docker binary/executable for running any docker commands
+
+3. /root/.docker/config.json   // authenication password which is encrypted format - dockerhub.com login details.
+
+===============================================================================================
+Docker basic commands:
+===============================================================================================
+1. docker version : Client and Server version of Docker
+
+command: docker version
+===============================================================================================
+2. docker info : Info provides details about number of containers, images etc, networking (IPaddress), OS details etc
+
+command: docker info
+===============================================================================================
+3. docker pull : pulls/fetches images from dockerhub.com.
+
+command: docker pull image_name:tag_name
+===============================================================================================
+4. docker images: docker images will display all the images in the machines.
+
+command: docker images
+===============================================================================================
+5. docker run : Docker run used for creating an container and running an application image.
+
+command: docker run -itd --name container_name image_name:tag_name
+         docker run -itd --name container_name -p 8080:8080 image_name:tag_name
+-it interactive
+-d daemon (To run process in background )
+
+eg : docker run -itd --name nginx_container nginx:latest
+
+[root@ip-172-31-23-10 ~]# docker run -itd --name nginx_container nginx:latest
+6497fce7f39e39e76ba040081acb2cf270d2271c3ec57e8739f49d21dcf4d9e5
+[root@ip-172-31-23-10 ~]# 
+
+[root@ip-172-31-23-10 ~]# docker run -itd --name httpd_container -p 80:80 httpd:latest
+ec86242f7b75f7a9ed19342a9f420397aeae43f2cacc0d85e7f828498b9bfecb
+[root@ip-172-31-23-10 ~]#
+
+===============================================================================================
+6. docker ps : docker ps will list all the running containers.
+
+command: docker ps 
+
+[root@ip-172-31-23-10 ~]# docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS              PORTS     NAMES
+6497fce7f39e   nginx:latest   "/docker-entrypoint.…"   About a minute ago   Up About a minute   80/tcp    nginx_container
+[root@ip-172-31-23-10 ~]# 
+
+===================================================================================================
+7. docker ps -a : This command will list all the running and non running containers.
+
+command: docker ps -a 
+
+[root@ip-172-31-23-10 ~]# docker ps -a
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS     NAMES
+6497fce7f39e   nginx:latest   "/docker-entrypoint.…"   2 minutes ago   Up 2 minutes   80/tcp    nginx_container
+[root@ip-172-31-23-10 ~]# 
+====================================================================================================
+8. docker exec : Docker exec will allow to switch inside container.
+
+command: docker exec -it container_id/container_name  /bin/bash
+
+[root@ip-172-31-23-10 boot]# docker exec -it 6497fce7f39e bash
+root@6497fce7f39e:/# 
+root@6497fce7f39e:/# 
+root@6497fce7f39e:/# 
+root@6497fce7f39e:/# nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+root@6497fce7f39e:/#
+========================================================================================================
+9. docker start/stop/restart  : This command starting/stopping/restarted the container with container_id or container_name.
+
+command: docker start containerid/containername
+         docker stop containerid/containername
+         docker restart containerid/containername
+
+========================================================================================================
+10. docker logs : To check logs of the software service running or application logs.
+
+command: docker logs -f containerid/containername 
+
+=====================================================================================================
+11. docker inspect : To check deatiled information about the containers and images.
+
+command:  docker inspect image_name:tage_name/image_id
+          docker inspect containerid/containername 
+=============================================================================================================
+12. docker rm : docker rm is used for removing/deleting the containers
+
+command: docker rm -f container_id/container_name
+
+
+13. docker rmi : docker rm is used for removing/deleting the images
+
+command: docker rmi -f image_id/Image_name:tag_name
+
+[root@ip-172-31-23-10 ~]# docker rmi -f redhat/ubi9:latest
+Untagged: redhat/ubi9:latest
+Untagged: redhat/ubi9@sha256:8614ce95268b970880a1eca97dddfce5154fab35418d839c5f75012cccaca0d9
+Deleted: sha256:e7236a3e070f267713ad79c451b8628166abc0bc9c855f624619e099ec3faa99
+Deleted: sha256:d91b2949283ab74ad98179b5e52dca6c5ce9952f23038246cc0015dee43e2f23
+[root@ip-172-31-23-10 ~]# 
+[root@ip-172-31-23-10 ~]# 
+[root@ip-172-31-23-10 ~]# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
+nginx        latest    f9c14fe76d50   6 days ago   143MB
+httpd        latest    d1676199e605   7 days ago   145MB
+[root@ip-172-31-23-10 ~]# 
+
+
+===============================================================================================================
+==============================================================================================
+Dockerhub Account Creation
+==============================================================================================
+Docker Advanced commands
+=========================================================================================
+1. docker login : Docker login is used for logging into dockerhub.com from command line.
+
+command: docker login
+username: trainercloud
+password: *********
+
+[root@ip-172-31-23-10 ~]# docker login 
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: trainercloud
+Password: 
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+[root@ip-172-31-23-10 ~]# cat /root/.docker/config.json
+{
+        "auths": {
+                "https://index.docker.io/v1/": {
+                        "auth": "dHJhaW5lcmNsb3VkOlJlZGhhdEBAMDAx"
+                }
+        }
+}[root@ip-172-31-23-10 ~]#
+
+==================================================================================================
+2. docker logout:  Docker logout is used for logging out from dockerhub.com from command line.
+
+command: docker logout
+
+[root@ip-172-31-23-10 ~]# cat /root/.docker/config.json
+{
+        "auths": {
+                "https://index.docker.io/v1/": {
+                        "auth": "dHJhaW5lcmNsb3VkOlJlZGhhdEBAMDAx"
+                }
+        }
+}[root@ip-172-31-23-10 ~]# 
+[root@ip-172-31-23-10 ~]# 
+[root@ip-172-31-23-10 ~]# docker logout
+Removing login credentials for https://index.docker.io/v1/
+[root@ip-172-31-23-10 ~]# 
+[root@ip-172-31-23-10 ~]# cat /root/.docker/config.json
+{
+        "auths": {}
+}[root@ip-172-31-23-10 ~]# 
+
+===================================================================================================
+3. docker push : Docker push is used for pushing images from local system to dockerhub.com.
+
+command: docker push image_name:tag_name 
+
+
+[root@ip-172-31-23-10 ~]# docker push nginx-new:1.9
+The push refers to repository [docker.io/library/nginx-new]
+4fd834341303: Preparing 
+5e099cf3f3c8: Preparing 
+7daac92f43be: Preparing 
+e60266289ce4: Preparing 
+4b8862fe7056: Preparing 
+8cbe4b54fa88: Waiting 
+denied: requested access to the resource is denied
+[root@ip-172-31-23-10 ~]# docker tag nginx-new:1.9 trainercloud/nginx-new:1.9
+[root@ip-172-31-23-10 ~]# 
+[root@ip-172-31-23-10 ~]# docker images
+REPOSITORY               TAG       IMAGE ID       CREATED      SIZE
+nginx-new                1.9       f9c14fe76d50   6 days ago   143MB
+nginx                    latest    f9c14fe76d50   6 days ago   143MB
+trainercloud/nginx-new   1.9       f9c14fe76d50   6 days ago   143MB
+'[root@ip-172-31-23-10 ~]# docker push trainercloud/nginx-new:1.9
+The push refers to repository [docker.io/trainercloud/nginx-new]
+4fd834341303: Pushed 
+5e099cf3f3c8: Pushed 
+7daac92f43be: Pushed 
+e60266289ce4: Pushed 
+4b8862fe7056: Pushed 
+8cbe4b54fa88: Pushed 
+1.9: digest: sha256:6b06964cdbbc517102ce5e0cef95152f3c6a7ef703e4057cb574539de91f72e6 size: 1571
+[root@ip-172-31-23-10 ~]#
+==============================================================================================================
+4. docker pull : Docker pull is used for fetching/pulling image from dockerhub.com to local system.
+
+command: docker pull image_name:tag_name
+
+
+[root@ip-172-31-23-10 ~]# docker pull trainercloud/nginx-new:1.9
+1.9: Pulling from trainercloud/nginx-new
+f03b40093957: Pull complete 
+eed12bbd6494: Pull complete 
+fa7eb8c8eee8: Pull complete 
+7ff3b2b12318: Pull complete 
+0f67c7de5f2c: Pull complete 
+831f51541d38: Pull complete 
+Digest: sha256:6b06964cdbbc517102ce5e0cef95152f3c6a7ef703e4057cb574539de91f72e6
+Status: Downloaded newer image for trainercloud/nginx-new:1.9
+docker.io/trainercloud/nginx-new:1.9
+[root@ip-172-31-23-10 ~]#
+
+[root@ip-172-31-23-10 ~]# docker pull nginx:latest
+latest: Pulling from library/nginx
+Digest: sha256:af296b188c7b7df99ba960ca614439c99cb7cf252ed7bbc23e90cfda59092305
+Status: Downloaded newer image for nginx:latest
+docker.io/library/nginx:latest
+[root@ip-172-31-23-10 ~]# 
+
+==============================================================================================================
+
+=========================================================================================================
+Tags in Docker :
+=========================================================================================================
+Tag is used for bookmarking any particular changes. In Docker, we use tag for segregating the images with different versions.
+
+syntax:  : docker tag image_name:latest image_name:1.0
+
+command: docker tag nginx:latest nginx-image:1.9
+         docker tag nginx:latest trainercloud/nginx-image:1.9
+
+=================================================================================================================
+Dockerfile Instructions & Creation :
+================================================================================================================
+Dockerfile is instructions file which container all the linux commands required for build image, application artifacts, dependent files , startup commands etc
+
+Dockerfile should have naming convention as "Dockerfile" and Should start captial "D".
+We have can files naming conventions as below:
+Dockerfile, Dockerfile_tomcat, Dockerfile_http01 etc
+
+================================================================================================
+Dockerfile Instructions :
+================================================================================================
+1. FROM : FROM instruction is used for mentioning what should be base image for the Dockerfile.
+          Here we mention on top of which base image we have to build our application.
+
+eg : FROM ubuntu:latest
+     FROM nginx:latest
+     FROM redhat/uib9:latest
+===============================================================================================
+2. MAINTAINER: This instruction is used for updating the author details that who has developed this Dockerfile.
+
+eg : MAINTAINER email/name
+
+=====================================================================================================================
+3. RUN : This instruction is used for running any linux commands.
+         This instruction runs the commands at build time of Docker image.
+
+eg : RUN mkdir -p /opt/tomcat
+     RUN yum install java-1.8.0* -y
+     RUN useradd ansible
+==================== ===============================================================================================
+4. CMD : CMD instruction is used for running startup commands or starting the application service commands at runtime of the container.
+
+If more than one CMD instruction is mentioned, it will ignore all the CMD instructions except the last one.
+
+eg: CMD ["bash startup.sh"]
+    CMD [""]
+    CMD ["/opt/tomcat/bin/calatina.sh", run]
+========================================================================================================================
+5. ENV : ENV instruction is used for creating the environment variables inside the docker images and can be accessed at docker container runtime.
+
+eg: ENV USERNAME=tomcat
+    ENV PASSWORD=""
+========================================================================================================================
+6. WORKDIR: WORKDIR instruction is used for switching between directory. Same as your "cd" command in linux
+
+eg: WORKDIR /opt/tomcat/webapps
+    WORKDIR /app/devops/
+
+=======================================================================================================================
+7. USER : USER Instruction is used for switching from one user to user.
+
+eg : USER ansible
+     USER root
+
+=====================================================================================================================
+8. COPY: COPY Instruction is used for copying files from local machine to inside Docker image location.
+
+eg : COPY /opt/file.txt  /opt/tomcat/file.txt
+
+=====================================================================================================================
+9. ADD : COPY Instruction is used for add files from local machine to inside Docker image location.
+
+eg : ADD /opt/file.txt  /opt/tomcat/file.txt
+=====================================================================================================================
+10. ENTRYPOINT: Entrypoint instruction is used for running startup commands or starting the application service commands at runtime of the container along with CMD to pass any arguments.
+With Entrypoint instruction, we can use more than one CMD instruction inside a Dockerfile.
+
+eg : ENTRYPOINT ["/opt/tomcat/bin/calatina.sh"]
+     CMD ["run"]
+     CMD [""]
+     CMD ["force-start"]
+=======================================================================================================================
+How to create Dockerfile ?
+=========================================================================================================================v
+vi Dockerfile
+===============================================================================
+FROM redhat/ubi9:latest
+MAINTAINER trainercloud2023@gmail.com
+RUN yum update -y
+RUN yum install nginx -y
+
+
+=========================================================================================================================v
+vi Dockerfile_Ubuntu
+===============================================================================
+FROM ubuntu:latest
+MAINTAINER trainercloud2023@gmail.com
+RUN apt-get update -y
+RUN apt-get install nginx -y
+
+
+
+[root@ip-172-31-23-10 ~]# docker build -t nginx-redhat .
+[+] Building 2.3s (7/7) FINISHED                                                                                             
+ => [internal] load build definition from Dockerfile                                                                    0.0s
+ => => transferring dockerfile: 202B                                                                                    0.0s
+ => [internal] load .dockerignore                                                                                       0.0s
+ => => transferring context: 2B                                                                                         0.0s
+ => [internal] load metadata for docker.io/redhat/ubi9:latest                                                           0.1s
+ => [1/3] FROM docker.io/redhat/ubi9:latest@sha256:8614ce95268b970880a1eca97dddfce5154fab35418d839c5f75012cccaca0d9     0.0s
+ => CACHED [2/3] RUN yum update -y                                                                                      0.0s
+ => [3/3] RUN yum install nginx -y                                                                                      1.9s
+ => exporting to image                                                                                                  0.2s
+ => => exporting layers                                                                                                 0.2s
+ => => writing image sha256:e7d23ebb1ece2d1090dbe20be8511561aea883b7344e1a91dcd571102c3c64e3                            0.0s 
+ => => naming to docker.io/library/nginx-redhat                                                                         0.0s 
+[root@ip-172-31-23-10 ~]# 
+                                                                                                   
+[root@ip-172-31-23-10 ~]# docker images                                                                                      
+REPOSITORY     TAG       IMAGE ID       CREATED          SIZE
+nginx-redhat   latest    e7d23ebb1ece   17 seconds ago   233MB
+[root@ip-172-31-23-10 ~]# 
+
+[root@ip-172-31-23-10 ~]# docker run -itd --name redhat-container nginx-redhat:latest
+ae8e424a7a6881ffec38de8cfa1aec78a9c22772255a84891f6dde0cdb044bff
+[root@ip-172-31-23-10 ~]# 
+
+[root@ip-172-31-23-10 ~]# docker ps
+CONTAINER ID   IMAGE                 COMMAND       CREATED         STATUS         PORTS     NAMES
+ae8e424a7a68   nginx-redhat:latest   "/bin/bash"   4 seconds ago   Up 3 seconds             redhat-container
+[root@ae8e424a7a68 /]# 
+
+[root@ip-172-31-23-10 ~]# docker exec -it ae8e424a7a68 bash
+[root@ae8e424a7a68 /]# 
+[root@ae8e424a7a68 /]# nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+[root@ae8e424a7a68 /]# exit
+exit
+[root@ip-172-31-23-10 ~]# 
+
+=======================================================================================================================
+How to Build Image from Dockerfile ?
+==========================================================================================================================
+command: docker build -t nginx-redhat:latest . 
+     Note: dot(.) current directory => if dot is mentioned default Dockerfile available in current directory is picked up.
+
+        docker build -t nginx-redhat:latest -f Dockerfile_Ubuntu .
+         Note : Building Images using custom Dockerfile_Ubuntu files
+           
+
+===========================================================================================================================
+Docker save & load: Backup & Restore utilities in Docker images.
+
+docker save: docker save is used for taking backup of the docker image by bundling into tar file and further ship this file to some other location.
+
+syntax: docker save -o image.tar image_name:tag_name
+
+eg: docker save -o nginx-redhat-image.tar nginx-redhat:latest
+
+
+[root@ip-172-31-23-10 ~]# docker save -o nginx-redhat-image.tar nginx-redhat:latest
+[root@ip-172-31-23-10 ~]# 
+[root@ip-172-31-23-10 ~]# ls -lrt
+-rw-------. 1 root root 240835072 Jun  1 02:49 nginx-redhat-image.tar
+[root@ip-172-31-23-10 ~]# 
+
+===================================================================================================================
+docker load : docker load is used for restoring docker image from tar bundle and further we can create container using that image.
+
+syntax: docker load -i image.tar
+
+eg: docker load -i nginx-redhat-image.tar 
+
+
+[root@ip-172-31-23-10 ~]# docker load -i nginx-redhat-image.tar
+Loaded image: nginx-redhat:latest
+[root@ip-172-31-23-10 ~]# docker images
+REPOSITORY                  TAG       IMAGE ID       CREATED        SIZE
+nginx-ubuntu                latest    9de8252623e9   23 hours ago   173MB
+nginx-redhat                latest    e7d23ebb1ece   23 hours ago   233MB
+tainercloud/nginx-redhat    latest    e7d23ebb1ece   23 hours ago   233MB
+trainercloud/nginx-redhat   latest    e7d23ebb1ece   23 hours ago   233MB
+[root@ip-172-31-23-10 ~]# 
+
+=========================================================================================================================
+Docker export & import: Docker export and import are used for creating images out of running containers.
+=========================================================================================================================
+
+1. docker export : Create an docker image of out of running container and bundle the docker image as tar file.
+
+syntax: docker export container_id > image.tar
+
+command: docker export ae8e424a7a68 > nginx-redhat-container-image.tar
+
+
+[root@ip-172-31-23-10 ~]# docker ps
+CONTAINER ID   IMAGE                 COMMAND       CREATED        STATUS              PORTS     NAMES
+ae8e424a7a68   nginx-redhat:latest   "/bin/bash"   23 hours ago   Up About a minute             redhat-container
+[root@ip-172-31-23-10 ~]# 
+[root@ip-172-31-23-10 ~]# docker export ae8e424a7a68 > nginx-redhat-container-image.tar
+[root@ip-172-31-23-10 ~]# 
+[root@ip-172-31-23-10 ~]# ls -lrt
+total 220284
+-rw-r--r--. 1 root root       105 May 31 04:08 Dockerfile
+-rw-r--r--. 1 root root       109 May 31 04:10 Dockerfile_Ubuntu
+-rw-r--r--. 1 root root 225560576 Jun  1 03:01 nginx-redhat-container-image.tar
+[root@ip-172-31-23-10 ~]# 
+=========================================================================================================================
+2. docker import : docker import used for extracting docker image from tar bundle which was created out of running container and further can launch container using imported docker image.
+
+syntax: docker import - new-image-name < image.tar
+
+command: docker import - nginx-redhat-container-image < nginx-redhat-container-image.tar 
+
+[root@ip-172-31-23-10 ~]# docker import - nginx-redhat-container-image < nginx-redhat-container-image.tar 
+sha256:23c24f3bfecdca8e086cc924f701820a15ce5c82dd2f5712abb00091985d75c0
+[root@ip-172-31-23-10 ~]# 
+[root@ip-172-31-23-10 ~]# docker images
+REPOSITORY                     TAG       IMAGE ID       CREATED         SIZE
+nginx-redhat-container-image   latest    23c24f3bfecd   5 seconds ago   218MB
+nginx-ubuntu                   latest    9de8252623e9   23 hours ago    173MB
+tainercloud/nginx-redhat       latest    e7d23ebb1ece   23 hours ago    233MB
+trainercloud/nginx-redhat      latest    e7d23ebb1ece   23 hours ago    233MB
+[root@ip-172-31-23-10 ~]# 
+[root@ip-172-31-23-10 ~]# docker run -itd --name nginx-redhat-container-imported -p 80:80 nginx-redhat-container-image:latest bash
+082e337d540bf572161657ca14d3209b533e40ba087bf46a396af9a025e98feb
+[root@ip-172-31-23-10 ~]# 
+[root@ip-172-31-23-10 ~]# docker ps
+CONTAINER ID   IMAGE                                 COMMAND   CREATED         STATUS         PORTS                               NAMES
+082e337d540b   nginx-redhat-container-image:latest   "bash"    5 seconds ago   Up 4 seconds   0.0.0.0:80->80/tcp, :::80->80/tcp   nginx-redhat-container-imported
+[root@ip-172-31-23-10 ~]# 
+[root@ip-172-31-23-10 ~]# docker exec -it 082e337d540b bash
+[root@082e337d540b /]# 
+[root@082e337d540b /]# cd /opt
+[root@082e337d540b opt]# ls -lrt
+total 4
+-rw-r--r--. 1 root root   0 Jun  1 02:59 f5
+-rw-r--r--. 1 root root   0 Jun  1 02:59 f4
+-rw-r--r--. 1 root root   0 Jun  1 02:59 f3
+-rw-r--r--. 1 root root   0 Jun  1 02:59 f2
+drwxr-xr-x. 2 root root   6 Jun  1 02:59 test
+-rw-r--r--. 1 root root 259 Jun  1 02:59 f1
+[root@082e337d540b opt]# vi f1
+[root@082e337d540b opt]#
+
+=========================================================================================================================
+Docker volumes: Volumes are used for storing the data inside the containers.
+                Volumes are persistent storage that means even in case container is deleted , still container data will be available in docker host machine.
+
+1. bind volumes: Bind volumes allows users to create user defined volumes names and volumes locations in both Docker host and docker container.
+
+command: docker run -itd --name container_name -v /opt/data:/opt/data image_name:tag_name
+         docker exec -it container_id bash
+         cd /opt/data
+          touch f1 f2
+ 
+Verify host machine: cd /opt/data
+                     ls -lrt
+============================================================================================================
+2. Unnamed volumes: Unnamed volumes are created in docker host location under /var/lib/docker/volumes/ with unknown name and for docker container we have mention the volume location using "VOLUME instruction" inside Dockerfile.
+
+vi Dockerfile
+FROM redhat/ubi9:latest
+MAINTAINER trainercloud2023@gmail.com
+VOLUME /mnt/data
+RUN yum update -y
+RUN yum install nginx -y
+
+command: docker run -itd --name container_name image_name:tag_name
+         docker exec -it container_id bash
+         cd /mnt/data
+         touch f1 f2
+ 
+Verify host machine: cd /var/lib/docker/volumes/ajddhpnpckdmmddpkapdamddp/
+                     ls -lrt
+=========================================================================================================================
+3. Named volumes: Named volumes are created in docker host location under /var/lib/docker/volumes/ with user defined volume name and for docker container we can mention the user defined name at time of container creation.
+
+command: docker volume create vol_1
+         docker volume delete vol_1
+         docker volume inspect vol_1
+         docker volume ls
+
+
+command: docker run -itd --name container_name --mount src=vol_1,target=/opt/vol/data image_name:tag_name
+         docker exec -it container_id bash
+         cd /opt/vol/data
+          touch f1 f2
+ 
+Verify host machine: cd cd /var/lib/docker/volumes/vol_1/
+                     ls -lrt
+
+=========================================================================================================================
+
+=========================================================================================================================
+E2E httpd build & deployment via Docker :
+========================================================================================================================
+Install httpd service :
+=================================================
+1. sudo su
+2. yum install httpd -y
+3. cd /var/www/html
+vi index.html
+
+systemctl start httpd
+
+URL : http://Public-ip:80/index.html
+==========================================================
+vi Dockerfile_httpd
+
+FROM redhat/ubi9:latest
+
+MAINTAINER devopscloudtrainer2022@gmail.com
+
+RUN yum install httpd -y
+
+RUN yum install -y procps
+
+COPY index.html /var/www/html/index.html
+
+EXPOSE 80
+
+CMD ["/usr/sbin/httpd","-D","FOREGROUND"]
+
+
+Execution: docker build -t httpd-image -f Dockerfile_httpd .
+           docker run -itd --name httpd-container -p 80:80 httpd-image:latest
+           docker ps
+           
+Open URL :  http://Public-ip:80/index.html
+       Note: security groups : 80/22/custom ICPM IPV4
+
+=============================================================================================
+E2E Tomcat build &  deployment via Docker:
+==========================================================================================
+vi  Dockerfile_tomcat
+
+FROM redhat/ubi9:latest
+MAINTAINER demo@training.com
+ENV tomcat_test 123
+RUN yum update -y
+RUN mkdir -p /opt/tomcat/
+WORKDIR /opt/tomcat
+RUN curl -O http://archive.apache.org/dist/tomcat/tomcat-8/v8.5.40/bin/apache-tomcat-8.5.40.tar.gz
+RUN tar xvfz apache*.tar.gz
+RUN mv apache-tomcat-8.5.40/* /opt/tomcat/
+RUN yum -y install java-1.8.0*
+RUN java -version
+WORKDIR /opt/tomcat/webapps
+RUN curl -O -L https://github.com/AKSarav/SampleWebApp/raw/master/dist/SampleWebApp.war
+EXPOSE 8080
+CMD ["/opt/tomcat/bin/catalina.sh", "run"]
+
+Execution: 
+
+docker build -t webapp-tomcat -f Dockerfile_tomcat .
+
+docker run -itd --name webapp-tomcat-container -p 8080:8080  webapp-tomcat:latest
+
+docker exec -it container_id bash
+container_id> env
+
+URL : http://Public-IP:8080
+ Note: security groups : 8080/22/custom ICPM IPV4
+
+Tag and Push Image to Dockerhub ":
+
+docker tag webapp-tomcat:latest devopscloudtrainer2022/tomcat:9.0
+
+docker push devopscloudtrainer2022/tomcat:9.0
+=======================================================================================================
+
+
