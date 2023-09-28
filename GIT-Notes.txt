@@ -1,0 +1,786 @@
+===================================================================
+GIT/Github: 
+===================================================================
+Overview of GIT 
+what is VCS ? Types of VCS
+Git Architecture
+Installation of Git
+Github Account creation
+==================================================================
+Basic commands of git:
+ * git init, git config, git status, git log, git add, git commit, git show
+==================================================================
+Advanced commands of git :
+  * git clone, git push, git pull
+Fork mechanism remote repos
+Remotes concept for adding remote alias
+=========================================================================
+Branch & Branching Strategies
+Stash 
+Tags
+================================================
+revert
+reset ( soft, hard, mixed)
+Merge & Rebase
+cherry-pick
+===============================================
+Pull Request - Creating pull request, review mechanism
+============================================================
+Additonal Commands:
+ * fetch, checkout, clean, rm
+Github Administration
+=====================================================================================
+Git Scenario Questions
+=====================================================================================
+
+
+GIT: Global Interaction Tool/ Global Tracking tool
+
+GIT tool : Command line tool for performing git operation
+GITHUB : Graphical User Interface - Actual store -> performe git operation
+
+GIT: Git is Distributed Version control system which provides proper tracking of the code and memory optimization.
+===========================================================================================
+version control system(VCS) :
+==============================================================================
+Tracking : 1. Which line/word/statement -> delete/added/modified
+           2. Author details - Email id and USer name
+           3. Time & date 
+
+Memory Optimization: 
+
+eg :
+Ecommerce-website: 
+ * Login page
+ * logout page
+ * payment gateway
+ * Acknowledgement
+ * product page
+
+Github - repository
+
+eg :
+DAY-1 -> login.java -> 1 GB -> execution(compilation,test,success) -> stable -> working condition
+         commit_id : jdbcidb77jddysdbdoldnd9nf -> Recording the changes in that files/directories
+
+DAY-2 -> login.java -> 1 GB = 2GB -> execution(compilation,test,success) -> stable -> working condition
+           commit_id : ncjdhdhhd9svsdsdbd9d -> Recording the changes in that files/directories
+DAY-3 -> 
+==============================================================================
+Why Git ? 
+==============================================================================
+eg : DevOps-work/secret.txt
+
+Windows & Linux : Tracking is done based on time & date modification, author, size.
+                  Drawback : Which line/word/statement -> delete/added/modified
+                  Identifing changes will be difficult.
+                  work history is missing
+
+Manages the spaces : 
+Ecommerce-website: 
+ * Login page
+ * logout page
+ * payment gateway
+ * Acknowledgement
+ * product page
+
+Directory - Code-repo( directory)
+
+eg :
+DAY-1 -> login.java -> 1 GB -> execution(compilation,test,success) -> stable -> working condition
+Backup_login.java_11042023 -> 1 GB
+DAY-2 -> login.java -> 1 GB + 1 GB = 2GB -> execution(compilation,test,success)-> stable -> working condition
+Backup_login.java_11042023 -> 2 GB
+DAY-3  -> login.java -> 2GB + 10 GB =12 GB -> execution(compilation,test,success)-> stable -> working condition
+Backup_login.java_11042023 -> 12 GB
+DAY-4 -> login.java -> 12 GB
+==============================================================================
+Types of Version Control System(VCS) :
+===============================================================================
+1. Centralized Version Control system - CLearcase/Suberversion
+  * CVCS have centralized repository for storing the code.
+  * No parallel work can be performed by different engineers
+  * Data loss , if original file is deleted, we lose the content and others cannot access the content.
+  * Internet connection is required to connect the system, that means bandwitdh and online connection to server.
+  * licence tool
+
+2. Distributed Version Control system - Github/Bitbucket
+  * DVCS have Centralized repository for storing the code.
+  * Parallel work can be performed by different engineers
+  * No Data loss , Even if local file is deleted, Still original repo or data is safe
+  * Less Internet connection is required to connect the system.
+  * Open source tool - Live system we require subscription.
+=====================================================================================
+Installation of Git :
+ * yum install git -y
+=================================
+Github Account Creation:
+=================================
+Github.com -> Sign up
+1. Email
+2. Password
+3. username
+4. product update 'n'
+5. Verfiy puzzle
+6. Email confirmation via 6 digit code
+7. How many members are using it ?
+just me
+8. Who are you?
+student
+9. Initailize the Github  -> home page
+==================================================================================
+Architecture/flow of GIT:
+====================================================================================
+  #############GIT#########################
+1. Working Directory : Any file created/modified/deleted will in working directory because its an non tracking file or 
+not in controll of git.
+  eg : vi file.txt
+       mkdir test /touch file
+
+2. Staging Area : Whenever we want to bring the file/directory in tracking/control of git.
+                git add file/directory
+                git add . 
+3. Local Repo: Record the changes via commit id.
+              git commit -m "messages"  -> jfbffhfibdjbsjfnjf9gbbf
+
+    #############GITHUB#########################
+4. Remote Repo: Push the changes ( commits and files/directories)
+                Github Account -> Company's repository
+=================================================================================
+Basic commands in Git :
+=================================================================================
+1. git init  --> intialize a repository
+
+eg : git init DevOps-repo
+
+eg : mkdir -p /opt/project/devops-repo
+     cd /opt/project/devops-repo
+     git init
+
+
+[root@ip-172-31-37-174 ~]# git init devops-repo
+Initialized empty Git repository in /root/devops-repo/.git/
+[root@ip-172-31-37-174 ~]#
+
+Repository : Repository is simply an directory but we call it repository bec it has additional mechanism of git.
+====================================================================================
+2. git status : This command tell where exactly your file/directories/changes.
+
+eg : git status
+====================================================================================
+3. git add :  This commands bring the file into git control and tracking starts.
+
+eg : vi test.txt
+ hello world
+:wq
+
+git add .  or git add test.txt
+
+=====================================================================================
+4. git commit : Recording the changes and it will create one hexa decimal 16 digit commit id.
+
+eg : git commit -m "Ticket-number Messages"
+     dkjfhhffo97hfjfd34fr4g5
+eg : git commit --amend -m "messages"
+      jdhhjfhff0873b3bofn000f
+
+=========================================================================================
+5. git log : Displays all the commit id
+
+eg : git log 
+      * commit Id
+      * commit messages
+      * owner details
+      * date & time
+     git log -n1 --> latest 1 commit id
+     git log -n5  --> latest 5 commits
+     git log --oneline  -> short message and commit id
+======================================================================================
+6. git show: Display the detailed output of a commit
+
+eg: git show commit_id
+
+==========================================================================================
+7. git config : Configuration changes in git
+
+* git config --list
+  git config --global user.name "devopstrainer"
+  git config --global user.email "devopstrainer2022@gmail.com"
+========================================================================
+Pending : 
+(use "git rm --cached <file>..." to unstage)
+(use "git restore <file>..." to discard changes in working directory)
+ (use "git restore --staged <file>..." to unstage)
+=========================================================================
+Integration git and github : ( HTTPS, SSH)
+=================================================================
+git clone : Cloning is process of downloading the entire repository in local system.
+            Cloning is done only once at beginning of the project.
+  * https -> username & password(token) -> clone/push/pull
+  * ssh  -> public ssh key -> clone/push/pull
+
+syntax: git clone <url>
+
+Https token : Github.com -> Profile -> settings -> Developers settings -> Personal access token -> Token (classic) ->
+ Generate new token -> Generate new Token (classic) 
+
+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
+==========================================================================
+https clone: 
+==========================================================================
+git clone https://github.com/bathinisreelatha/Ansible-repo.git
+==========================================================================
+vi file.txt
+git add .
+git commit -m "messages"
+
+==========================================================================
+git push : Push is used for pushing all the changes from local repo to Remote repo.
+
+synatx:  git push origin branch_name  // commits and files/folders
+
+[root@ip-172-31-43-107 Ansible-repo]# git push origin main
+Username for 'https://github.com': bathinisreelatha 
+Password for 'https://bathinisreelatha@github.com':
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 663 bytes | 663.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/bathinisreelatha/Ansible-repo.git
+   4c89f98..45cd5d3  main -> main
+[root@ip-172-31-43-107 Ansible-repo]#
+============================================================================
+git pull : Pull is used for getting the updated changes from Remote repo to local repo.
+
+syntax : git pull origin  branch_name // commits and files/folders
+
+[root@ip-172-31-43-107 Ansible-repo]# git pull origin main
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), 1.05 KiB | 1.05 MiB/s, done.
+From https://github.com/bathinisreelatha/Ansible-repo
+ * branch            main       -> FETCH_HEAD
+   45cd5d3..1ba48d7  main       -> origin/main
+Updating 45cd5d3..1ba48d7
+Fast-forward
+ Architecture.txt | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+ create mode 100644 Architecture.txt
+[root@ip-172-31-43-107 Ansible-repo]#
+==========================================================================
+ssh clone: 
+==========================================================================
+Generate an key : ssh-keygen -t rsa
+                  cat /root/.ssh/id_rsa.pub
+
+
+Github.com -> profiles -> settings -> ssh & gpg keys  -> new ssh key -> add key.
+
+
+git clone https://github.com/bathinisreelatha/Ansible-repo.git
+
+[root@ip-172-31-43-107 ssh-clone-repo]# git clone git@github.com:bathinisreelatha/Ansible-repo.git
+Cloning into 'Ansible-repo'...
+remote: Enumerating objects: 12, done.
+remote: Counting objects: 100% (12/12), done.
+remote: Compressing objects: 100% (8/8), done.
+remote: Total 12 (delta 0), reused 3 (delta 0), pack-reused 0
+Receiving objects: 100% (12/12), done.
+[root@ip-172-31-43-107 ssh-clone-repo]#
+==========================================================================
+================================================================================
+Remotes: Git Remote is central clearing house where we are storing all the code/scripts etc
+
+Alais -> Short name for github url's for easily identifying the repo url and easily pushing & pulling changes to & from
+remote repos.
+
+Commands : git remote -v   -> Display all the remote repos
+           git remote add  upstream git@github.com:goudsagar/Ansible-repo.git
+           git remote remove upstream git@github.com:goudsagar/Ansible-repo.git
+           git remote update origin git@github.com:johnsmith/kubernetes-repo.git
+
+
+git remote -v
+origin  git@github.com:bathinisreelatha/Ansible-repo.git(push)
+origin  git@github.com:bathinisreelatha/Ansible-repo.git(fetch)
+upstream git@github.com:goudsagar/Ansible-repo.git(push)
+upstream git@github.com:goudsagar/Ansible-repo.git(fetch)
+
+
+syntax:  git remote add <alais> < url >
+command: git remote add  upstream git@github.com:goudsagar/Ansible-repo.git
+
+
+git push origin employee
+git pull upstream company
+=============================================================================================================
+Fork: A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project
+=====================================================================
+Branch & Branching Strategy :
+========================================================================
+Branch are nothing an folder/directories in git/github where we will be allowed to add files/directories for unique activities or different purpose for storage.
+
+Branches are very cheap in git/github, we can easily create a branch, delete a branch whenever required because
+with branches not much storage code  is incurred nor performance issues etc
+
+
+eg : Ecommerce website:
+      * login page
+      * logout feature
+      * payment methods
+      * product page
+      * acknownledgment page
+
+Method 1 :  Ecommerce-website branch
+ a. login-feature : Add files/folders, commits, push this branch to remote.
+ b. logout-feature : Add files/folders, commits, push this branch to remote.
+ c. payment-feature : Add files/folders, commits, push this branch to remote - adding code which is not working.
+
+Github/git : Creating a branch for login-feature
+ 1. login-feature branch : Add files/folders, commits, push this branch to remote.
+       * Login-feature is not required -> delete the branch
+       *  Login-feature is working ->  same code can be used for other projects as well
+ 2. logout-feature branch : Add files/folders, commits, push this branch to remote.
+       * Login-feature is not required -> delete the branch
+       *  Login-feature is working ->  same code can be used for other projects as well
+
+Branch Standards :
+
+* Master/Main -> Master -> very features -> latest updated code
+* develop -> Developement branch -> features 
+* release -> facebook-relase-1.0, facebook-relase-1.0
+* hotfix -> naming convention ticket_fixissue
+* Feature-branch -> Feature wise branches
+
+
+
+
+eg :                  TREE ( GITHUB)
+                       |
+        Branches(prod)     Branches(develop)      Branches(release)  Branches(Hotfix)  (folders)
+                       | 
+                branches  fruits(files)  leaves(images)
+          |                            |
+                               branches  fruits leaves
+branches  fruits leaves
+  |
+branches    
+  | 
+leaves fruits
+===================================================================================================
+git branch   --> list all the local branches in GIT
+git branch branch_name  --> create branch
+git branch -d branch_name  -> delete branch
+git checkout branch_name --> switch to branch
+git checkout -b branch_name  --> create & switch branch
+git branch -D branch_name --> forcefully delete branch
+
+note: We cannot delete branch, when you are already inside that branch
+
+=========================================================================================================
+Stash: Stash is used storing the file/directories in temporary location.
+
+eg : Tomcat-installation: 
+        * Files/directories  -> Edited/add  -> yet to do commit  ===> Do the work completely  or revert everything back..
+  -> Nor I can revert changes bec effort is more ,  Nor go forward and commit bec still lot of changes pending to do..
+
+
+  * Suddenly we got a new hotfix request , to fix an Docker Image.
+
+Commands :
+git stash list --> list all the stashes
+git stash save "messages"  -> Creates an stash and stores all the changes in temporary location.
+git stash pop stash_name  --> This will bring out the temporary work in same current state where you left and at the same                            							time it delete the Entry in the stash
+git stash apply ==>     This will bring out the temporary work in same current state where you left and at the same                            							time it preserve the Entry in the stash.
+git stash drop ===> Remove stashes from the stash location one by one. 
+git stash clear => Removes all the stashes once.
+git stash show => This shows some detailed about that stash.
+======================================================================================================================
+git stash save "Save tomcat work in temporary location"
+======================================================================================================================
+[root@ip-172-31-43-107 Ansible-repo]# git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   Architecture.txt
+===============================================================
+[root@ip-172-31-43-107 Ansible-repo]# git stash save "Save tomcat work in temporary location"
+Saved working directory and index state On main: Save tomcat work in temporary location
+[root@ip-172-31-43-107 Ansible-repo]#
+
+=======================================================
+[root@ip-172-31-43-107 Ansible-repo]# git stash list
+stash@{0}: On main: Save tomcat work in temporary location
+[root@ip-172-31-43-107 Ansible-repo]#
+
+============================================================================================================
+[root@ip-172-31-43-107 Ansible-repo]# git stash show stash@{0}
+ Architecture.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
+[root@ip-172-31-43-107 Ansible-repo]#
+==============================================================================
+[root@ip-172-31-43-107 Ansible-repo]# git stash drop
+Dropped refs/stash@{0} (4a72b517d2e9bbc795b67a9eb1c5422ea8115815)
+[root@ip-172-31-43-107 Ansible-repo]# git stash list                                                                          
+[root@ip-172-31-43-107 Ansible-repo]#
+[root@ip-172-31-43-107 Ansible-repo]#
+============================================================
+=========================================================================================================================
+Tags :
+==========================================================================================================
+Tag is bookmark or checkpoint for marking the commit as stable commit.
+
+eg : 1.0
+2.0
+V1.0
+V1.0-login-feature
+
+commands:  git tag -l  --->list all tags
+           git tag tag_name --> create an tag 
+           git tag 1.0 --> create an tag 
+           git tag -a V1.0 -m "Version 1.0 for Release" -> Annotate tag
+           git tag -f V1.0 commit_id  --> Tagging/Update a specific commit 
+           git push -f origin --tags
+           git pull -f origin --tags
+           git tag -d tag_name --> deleting tag
+===============================================================================================
+Revert : 
+==============================================================================================
+Revert is mechanism where we can revert the changes to previous commit.
+
+command: * git revert commit_id  -> This command reverts changes using commit id and also this will create new commit_id for tracking the revert changes.
+
+          * git revert --abort  -> aborting the revert when there is any conflicts in files
+
+          * git revert --continue  --> when there is any conflicts in files, we can resolve issue and continue to revert changes.
+
+
+[root@ip-172-31-43-107 Ansible-repo]# git revert e493ac1
+Removing file-ssh-pull.txt
+[main 6495ae1] Revert changes of file-ssh-pull.txt  "Create file-ssh-pull.txt"
+ 1 file changed, 3 deletions(-)
+ delete mode 100644 file-ssh-pull.txt
+[root@ip-172-31-43-107 Ansible-repo]#
+===============================================================================================
+Reset ( soft, hard, mixed):
+==============================================================================================
+Reset : Reset is used for moving your HEAD pointer to desired commit.
+    -> We can rewind our commit to any previous commit id and start recording from that commit.
+
+command :git reset 
+
+===============================================================================================================
+Types of Reset: 
+===============================================================================================================
+1. Soft Reset: This is very safest reset bec this will move HEAD to  the previous commit where it doesnt changes anything
+in staging index and working Directory.
+
+command : git reset --soft commit_id
+
+[root@ip-172-31-43-107 devops-repo]# git reset --soft af62cd2
+[root@ip-172-31-43-107 devops-repo]# git status
+On branch release
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   Dockerfile
+
+[root@ip-172-31-43-107 devops-repo]#
+===============================================================================================================
+2. Mixed Reset:  This will remove changes from local repo & staging index and doesnt change anything working Directory.
+
+command : git reset --mixed commit_id
+
+[root@ip-172-31-43-107 devops-repo]# git reset --mixed 8a7748c
+[root@ip-172-31-43-107 devops-repo]# git log --oneline
+8a7748c (HEAD -> release) Adding devops.txt
+a046309 Adding f1
+4880804 (master) Adding new file
+[root@ip-172-31-43-107 devops-repo]# git status
+On branch release
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        Dockerfile
+        aws-notes
+
+nothing added to commit but untracked files present (use "git add" to track)
+[root@ip-172-31-43-107 devops-repo]#
+
+
+3. Hard Reset : This is most dangerous reset, which will remove everything on that commit, that means it will clean your
+working/staging/local repo.
+
+command : git reset --hard commit_id
+
+
+[root@ip-172-31-43-107 devops-repo]# git log --oneline
+805db0c (HEAD -> release) Adding correction
+8a7748c Adding devops.txt
+a046309 Adding f1
+4880804 (master) Adding new file
+[root@ip-172-31-43-107 devops-repo]# git reset --hard a046309
+HEAD is now at a046309 Adding f1
+[root@ip-172-31-43-107 devops-repo]#
+[root@ip-172-31-43-107 devops-repo]# git log --oneline
+a046309 (HEAD -> release) Adding f1
+4880804 (master) Adding new file
+[root@ip-172-31-43-107 devops-repo]#
+==============================================================================================================
+Merge & Rebase:
+======================================================================================
+Merge: Merge is process of combining commits from one branch to another branch.
+
+command : git merge branch_name
+
+======================
+Types of Merge: 
+======================
+1. Fast Forward merge
+2. Non Fast Forward merge
+
+1. Fast Forward merge
+eg :  Master   M1 M2 M3 M4
+      master > git merge feature
+      feature  M1 M2 M3 M4
+
+Commands:  master > git branch  -->master
+           master > git checkout -b  feature
+           feature > touch f3
+           feature > git add . / git commit -m "adding f3"
+           feature > git checkout master
+           master > git merge feature
+
+
+[root@ip-172-31-43-107 devops-repo]# git merge feature
+Updating d29fe58..986ed6f
+Fast-forward
+ f1-feature.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 f1-feature.txt
+[root@ip-172-31-43-107 devops-repo]#
+
+2. Non Fast Forward merge
+eg :  Master   M1 M2 M3 M4 M5 M6 MC (merge commit) 
+      master> git merge feature
+      feature  M1 M2 M3 M4 M5
+
+Commands:  master > git branch  -->master
+           master > git checkout -b  feature
+           feature > touch f3
+           feature > git add . / git commit -m "adding f3"
+           feature > git checkout master
+           master > touch f4 
+           master > git add . / git commit -m "adding f4"
+            master > git merge feature
+
+[root@ip-172-31-43-107 devops-repo]# git merge feature
+Merge made by the 'recursive' strategy.
+ f2-feature.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 f2-feature.txt
+[root@ip-172-31-43-107 devops-repo]# 
+==========================================================================================
+Rebase: 
+==========================================================================================
+Rebase is process of rewriting the history on top of base branch.
+Rebase is used for keeping commit history clean.
+
+eg :  Master   M1 M2 M3 M4 M5 M6 M7 M8 M9
+      master > git rebase develop
+      develop  M1 M2 M3 M4 M5 M6 M7 M8 M9
+
+Commands:  master > git branch  -->master
+           master > git checkout -b  develop
+           develop > touch f3
+           develop > git add . / git commit -m "adding f3"  -> 5-6 commits
+           develop > git checkout master
+           master > git rebase develop
+
+[root@ip-172-31-43-107 devops-repo]# git rebase develop
+Successfully rebased and updated refs/heads/master.
+[root@ip-172-31-43-107 devops-repo]#
+
+======================================================================================================
+cherry-pick :cherrypick is used for picking up one commit from  one branch and putting it in another branch.
+
+Command : git cherry-pick commit_id
+          git cherry-pick --abort
+          git cherry-pick --continue
+
+eg :  Master   M1 M2 M3 M4 M5 M6 M7 M8 M9 M10
+      master > git cherry-pick M10
+      develop  M1 M2 M3 M4 M5 M6 M7 M8 M9 M10
+
+[root@ip-172-31-43-107 devops-repo]# git cherry-pick c380856
+[master 6d2f827] Adding develop-f1.txt
+ Date: Mon Apr 17 05:21:28 2023 +0000
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 develop-f1.txt
+[root@ip-172-31-43-107 devops-repo]# 
+======================================================================================================
+Pull Request - Creating pull request, review mechanism
+=======================================================================
+Pull requests help you collaborate on code with other people. As pull requests are created, they’ll appear here in a searchable and filterable list.
+======================================================================================================================
+Github Adminsitration:
+==================================================================
+1. Github Account Settings 
+2. GITHUB Activities : branch/tag/repository/create file/commit from GUI
+3. Repository Settings :
+   * Collabrators : Permission
+   * Branch protection from deletion
+    * Restriction the Merge into company account - Minimum 2 review and always pull request to be raised
+4. Tag protection from deletion
+5. SSH Keys upload
+6. Token Generation
+7 . Webhooks - Covered in Jenkins
+8. Fork Mechanism
+=====================================================================================================
+Additonal Commands:
+=====================================================================================================
+1. fetch:  Fetch is part of pull, fetch will get the changes and keep in  intermediate branch called origin/master or upstream/master.
+   Further, when we merge changes from intermediate branch to local repo , we can see the changes in local repo
+
+git pull = Pull is used for downloading the updates changes from remote repo into local repo
+
+git pull = git fetch + git merge
+=====================================================================================================
+Scenario 1: If you local branch is corrupted/messed up/we dont want to put changes in local branch ,then we use fetch to get the changes in intermediate branch and put that changes into new branch.
+
+git fetch upstream master   ===> upstream/master
+  
+ Note : git log -> not able to see commit/ nor file chanages
+
+master> git checkout -b new_branchname upstream/master
+new_branchname > git log  ==> able to see changes(files/commits)
+
+* git fetch upstream master
+* git checkout -b new_branchname upstream/master
+
+[root@ip-172-31-43-107 simple-maven-project-with-tests]# git fetch upstream master
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 2 (delta 1), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (2/2), 626 bytes | 626.00 KiB/s, done.
+From github.com:trainercloud2023/simple-maven-project-with-tests
+ * branch            master     -> FETCH_HEAD
+   b51c583..37885ef  master     -> upstream/master
+[root@ip-172-31-43-107 simple-maven-project-with-tests]#
+
+[root@ip-172-31-43-107 simple-maven-project-with-tests]# git checkout -b login-feature upstream/master
+Branch 'login-feature' set up to track remote branch 'master' from 'upstream'.
+Switched to a new branch 'login-feature'
+[root@ip-172-31-43-107 simple-maven-project-with-tests]# git branch
+* login-feature
+  master
+[root@ip-172-31-43-107 simple-maven-project-with-tests]#
+=====================================================================================================
+Scenario 2: Now we want to get into local branch via fetch and merge instead.
+
+* git fetch upstream master
+* master> git merge upstream/master
+
+
+[root@ip-172-31-43-107 simple-maven-project-with-tests]# git fetch upstream master
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 2 (delta 1), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (2/2), 626 bytes | 626.00 KiB/s, done.
+From github.com:trainercloud2023/simple-maven-project-with-tests
+ * branch            master     -> FETCH_HEAD
+   b51c583..37885ef  master     -> upstream/master
+[root@ip-172-31-43-107 simple-maven-project-with-tests]#
+
+[root@ip-172-31-43-107 simple-maven-project-with-tests]# git merge upstream/master
+Merge made by the 'recursive' strategy.
+ testing-fetch.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 testing-fetch.txt
+[root@ip-172-31-43-107 simple-maven-project-with-tests]#
+=======================================================================================
+Checkout :
+=======================================================================================
+ * git checkout branch_name  ==> switch to another branch
+ * git checkout -b new_branch_name ==> create & switch 
+  * git checkout -b new_branch_name upstream/master ==> create, switch ,combine commits/changes from upstream/master into new_branch_name 
+
+=======================================================================================
+git rm: Remove file from git control and tracking should take place also recording the commit should happen.
+=========================================================================================
+* git rm file.txt 
+* git status
+* git commit -m "Deleting file.txt "
+* git push -u origin master
+* pull request 
+=========================================================================================
+git clean: Cleaning files in working directory.
+=========================================================================================
+* git clean -n  ==> dry-run
+* git clean -f  ==> actually delete all file/directory forcefully
+
+[root@ip-172-31-43-107 simple-maven-project-with-tests]# touch f2 f1 f3 f4 f5
+[root@ip-172-31-43-107 simple-maven-project-with-tests]# ls -rlt
+total 24
+-rw-r--r--. 1 root root 1343 Apr 18 04:37 pom.xml
+-rw-r--r--. 1 root root   16 Apr 18 04:37 test-new
+-rw-r--r--. 1 root root    5 Apr 18 04:37 test
+drwxr-xr-x. 3 root root   18 Apr 18 04:37 src
+-rw-r--r--. 1 root root   41 Apr 18 04:39 ansible-automation.yml
+-rw-r--r--. 1 root root 1128 Apr 18 05:02 testing-hook
+-rw-r--r--. 1 root root    0 Apr 19 04:37 new-file.txt
+-rw-r--r--. 1 root root    0 Apr 19 04:45 file-pr.txt
+-rw-r--r--. 1 root root    1 Apr 20 04:26 testing-pull.txt
+-rw-r--r--. 1 root root    0 Apr 20 04:51 f5
+-rw-r--r--. 1 root root    0 Apr 20 04:51 f4
+-rw-r--r--. 1 root root    0 Apr 20 04:51 f3
+-rw-r--r--. 1 root root    0 Apr 20 04:51 f2
+-rw-r--r--. 1 root root    0 Apr 20 04:51 f1
+[root@ip-172-31-43-107 simple-maven-project-with-tests]# git status
+On branch master
+Your branch is ahead of 'origin/master' by 7 commits.
+  (use "git push" to publish your local commits)
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        f1
+        f2
+        f3
+        f4
+        f5
+
+nothing added to commit but untracked files present (use "git add" to track)
+[root@ip-172-31-43-107 simple-maven-project-with-tests]# git clean -n
+Would remove f1
+Would remove f2
+Would remove f3
+Would remove f4
+Would remove f5
+[root@ip-172-31-43-107 simple-maven-project-with-tests]# git clean -f
+Removing f1
+Removing f2
+Removing f3
+Removing f4
+Removing f5
+[root@ip-172-31-43-107 simple-maven-project-with-tests]# ls -lrt
+total 24
+-rw-r--r--. 1 root root 1343 Apr 18 04:37 pom.xml
+-rw-r--r--. 1 root root   16 Apr 18 04:37 test-new
+-rw-r--r--. 1 root root    5 Apr 18 04:37 test
+drwxr-xr-x. 3 root root   18 Apr 18 04:37 src
+-rw-r--r--. 1 root root   41 Apr 18 04:39 ansible-automation.yml
+-rw-r--r--. 1 root root 1128 Apr 18 05:02 testing-hook
+-rw-r--r--. 1 root root    0 Apr 19 04:37 new-file.txt
+-rw-r--r--. 1 root root    0 Apr 19 04:45 file-pr.txt
+-rw-r--r--. 1 root root    1 Apr 20 04:26 testing-pull.txt
+[root@ip-172-31-43-107 simple-maven-project-with-tests]#
+================================================================================
+
+
+
+
