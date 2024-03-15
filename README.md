@@ -69,3 +69,5 @@ To use the built in server adapters of Eclipse, instead of doing "Run As -> Mave
 
 python document link
 https://drive.google.com/file/d/1ReI24BvNi5WA4ciMBO6UmPSSLAoG7Ky5/view?usp=drivesdk
+pyhton notes link
+https://play.google.com/store/books/details?id=5bQ2EAAAQBAJ
